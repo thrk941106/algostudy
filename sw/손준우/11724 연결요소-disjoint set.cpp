@@ -1,8 +1,6 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-#define WHITE 0
-#define BLACK 1
 #define NIL -1
 using namespace std;
 
