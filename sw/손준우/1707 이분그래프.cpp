@@ -3,56 +3,52 @@
 #include<algorithm>
 #define WHITE 0
 using namespace std;
-int is_bi = 0;
+vector<int> graph[20001];
+int color[20001];
 
-void dfs(vector<int> *v, int start, int *color, int c){
+bool dfs(int start, int c){
     color[start] = c;
-    for(int i = 0 ; i < v[start].size() ; i++) {
-        int next = v[start][i];
-        if(color[next] == WHITE){
-            dfs(v, next, color,3-c);
-            if(is_bi != 0){
-                return;
+    for(int i = 0 ; i < graph[start].size() ; i++) {
+        int next = graph[start][i];
+        if(color[next]==WHITE){
+            if(!dfs(next,3-c)){
+                return false;
             }
-        } else if(color[start] == color[next]) {
-                cout << "NO" << '\n';
-                is_bi++;
-                return;
+        } else if(color[next] == c) {
+                return false;
         }
-        
     }
+    return true;
 }
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test_cnt;
+    int test_cnt, v, e, s, d;
     cin >> test_cnt;
 
     while(test_cnt--) {
-        int v, e;
         cin >> v >> e;
-        vector<int> graph[v+1];
-        int color[v+1];
-        fill(color, color+v+1, WHITE);
+        for (int i=1; i<=v; i++) {
+            graph[i].clear();
+            color[i] = WHITE;
+        }
         while(e--){
-            int s, d;
 			cin >> s >> d;
             graph[s].push_back(d);
             graph[d].push_back(s);
         }
+        bool ok = true;
         for(int i = 1 ; i <= v ; i++){
             if(color[i] == WHITE){
-                dfs(graph,i,color,1);   
-                if(is_bi!=0){
-            	    break;
-        	    } 
+                if(!dfs(i, 1)){
+                    ok = false;
+                    cout << "NO"<<'\n';
+                    break;
+                } 
             }
         }
-        if(is_bi==0){
-            cout << "YES" <<'\n';
-        } 
-        is_bi=0;
+        if (ok == true) cout << "YES" << '\n';
     }
 }
