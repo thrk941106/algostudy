@@ -1,0 +1,106 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int map[626];
+int parent[626];
+int answer[626];
+int find(int i){
+    int r, s;
+    for(r=i ; parent[r] >= 0 ; r=parent[r] );
+    
+    while(i != r){
+        s=parent[i];
+        parent[i] = r;
+        i=s;
+    }
+    return r;
+}
+
+int weighted_union(int i, int j){
+    int temp = parent[i]+parent[j];
+    if(parent[i]>parent[j]){
+       	parent[i] = j;
+		parent[j] = temp;
+	}
+	else {
+		parent[j] = i;
+		parent[i] = temp;
+	}
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n;
+    int max;
+    int cnt=0;
+    cin >> n;
+    max = n*n;
+    for(int i=1 ; i<=max ; i++){
+        char c;
+        parent[i]=-1;
+        if(c == '0'){
+            map[i]=0;
+        } else {
+            map[i]=1;
+        }
+    }
+    for(int i=1 ; i<=max ; i++){
+        int up,down,left,right,current;
+        current = find(i);
+        if(map[i]==1){
+            map[i] == -map[i];
+            if(i%n==1){
+                    //力老 哭率 临
+                map[i+1] == -map[i+1];
+                right=find(i+1);
+                weighted_union(current, right);
+            } else if(i%n==0){
+                    //力老 坷弗率 临
+                map[i-1] == -map[i-1];
+                left=find(i-1);
+                weighted_union(current, left);
+            } else{
+                map[i+1] == -map[i+1];
+                map[i-1] == -map[i-1];
+                right=find(i+1);
+                left=find(i-1);
+                weighted_union(current, left);
+                weighted_union(current, right);
+            }
+            
+            if(i>=1 && i<=n){
+                // 力老 拉临
+                map[i+n] == -map[i+n];
+                down=find(i+n);
+                weighted_union(current, down);
+                
+            }else if(i>(max-n) && i <=max){
+                //力老 酒阀临
+                map[i-n] == -map[i-n];
+                up=find(i-n);
+                weighted_union(current, up);
+            } else {
+                map[i+n] == -map[i+n];
+                map[i-n] == -map[i-n];
+                down=find(i+n);
+                up=find(i-n);
+                weighted_union(current, down);
+                weighted_union(current, up);
+            }
+        }
+    }
+    for(int i = 1 ; i<=max ; i++) {
+        if(parent[i] < 0){
+            cnt++;
+            answer[cnt] = -parent[i];
+        }
+    }
+    cout << cnt << '\n';
+    sort(answer+1, answer+cnt+1);
+    for(int i = 1 ; i<=cnt ; i++){
+        cout << answer[i] << '\n';
+    }
+}
