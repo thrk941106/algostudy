@@ -1,0 +1,46 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<queue>
+using namespace std;
+int n,k;
+int color[100001];
+
+void bfs(){
+    int x;
+    queue<int> q;
+    q.push(n);
+    
+    while(!q.empty()){
+        x=q.front();
+        q.pop();
+        for( int i=0 ; i<3 ; i++ ){
+            int nx;
+            switch(i){
+                case 0 : 
+                   nx = x+1;
+                case 1 :
+                    nx = x-1;
+                case 2 :
+                    nx = x*2;
+            }
+            if(color[nx]!=0 && 0<nx  && nx <=100000){
+            	
+            	color[nx] = color[x] +1;
+            	if(nx == k){
+                	cout << color[nx];
+                	return;
+            	}
+            	q.push(nx);
+            }
+        }  
+    }
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> n >> k;
+    bfs();
+}
