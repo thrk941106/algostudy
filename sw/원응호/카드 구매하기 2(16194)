@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+int card[1001];
+int ans[1001];
+int n;
+int cal(int number) {
+	int min = ans[number - 1] + card[1];
+	for (int i = 1; i <=n; i++) {
+		if (number - i < 0)
+			break;
+		int temp = ans[number - i] + card[i];
+		if (min > temp) 
+			min = temp;
+	}
+	return min;
+}
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cin >> card[i];
+	}
+	ans[0] = 0;
+	ans[1] = card[1];
+	for (int i = 2; i <= n; i++) {
+		ans[i]=cal(i);
+	}
+	cout << ans[n];
+
+	
+}
