@@ -1,0 +1,44 @@
+#include<iostream>
+#include<queue>
+#include<string.h>
+using namespace std;
+int n, k;
+int c[200001];
+deque<int> q;
+
+void bfs() {
+	c[n] = 0;
+	q.push_back(n);
+
+	while (!q.empty()) {
+		int x = q.front();
+		q.pop_front();
+		if (x * 2 < 200000) {
+			if (c[x * 2] == -1) {
+				q.push_front(x * 2);
+				c[x * 2] = c[x];
+			}
+		}
+		if (x - 1 >= 0) {
+			if (c[x - 1] == -1) {
+				q.push_back(x - 1);
+				c[x - 1] = c[x] + 1;
+			}
+		}
+		if (x + 1 < 200000) {
+			if (c[x + 1] == -1) {
+				q.push_back(x + 1);
+				c[x + 1] = c[x] + 1;
+			}
+		}
+	}
+}
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	cin >> n >> k;
+	memset(c, -1, sizeof(c));
+	bfs();
+	cout << c[k];
+}
