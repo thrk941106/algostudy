@@ -1,0 +1,18 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int n;
+int ans[1001];
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	cin >> n;
+	ans[1] = 1;
+	ans[2] = 3;
+
+	for (int i = 3; i <= n; i++) {
+		ans[i] = ans[i - 1] + 2 * ans[i - 2];
+		ans[i] %= 10007;
+	}
+	cout << ans[n];
+}
