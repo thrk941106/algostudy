@@ -1,0 +1,47 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int arr[52][52];
+bool c[52][52];
+int cnt;
+int dx[] = { -1,0,1,-1,1,-1,0,1 };//j
+int dy[] = { -1,-1,-1,0,0,1,1,1 };//i
+void dfs(int x, int y) {
+	c[x][y] = true;
+	for (int i = 0; i < 8; i++) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+		if (c[nx][ny] == false && arr[nx][ny] == 1) {
+			dfs(nx, ny);
+		}
+	}
+
+}
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	int	w, h;//w=x=j, h=y=i
+	while (1) {//초기화 유의
+		cin >> w >> h;
+		cnt = 0;
+		if (w == 0 && h == 0)
+			break;
+		for (int i = 1; i <= h; i++) {
+			for (int j = 1; j <= w; j++) {
+				cin >> arr[i][j];
+				c[i][j] = false;
+			}
+		}
+		for (int i = 1; i <= h; i++) {
+			for (int j = 1; j <= w; j++) {
+				if (c[i][j] == false && arr[i][j] == 1) {
+					dfs(i, j);
+					cnt++;
+				}
+			}
+		}
+		cout << cnt << '\n';
+
+	}
+
+}
