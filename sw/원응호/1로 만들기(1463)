@@ -1,0 +1,33 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int ans[1000001];
+int recur(int n) {
+	if (n == 1 || ans[n] > 0)
+		return ans[n];
+
+	if (n % 6 == 0)
+		ans[n] = std::min(std::min(recur(n / 3), recur(n / 2)), recur(n - 1)) + 1;
+
+	else if (n % 3 == 0) {
+		ans[n] = std::min(recur(n / 3), recur(n - 1)) + 1;
+	}
+
+	else if (n % 2 == 0) {
+		ans[n] = std::min(recur(n / 2), recur(n - 1)) + 1;
+	}
+	else
+		ans[n] = recur(n - 1) + 1;
+	return ans[n];
+
+
+}
+int main() {
+	int n;
+	cin >> n;
+	ans[1] = 0;
+	ans[2] = 1;
+	ans[3] = 1;
+	cout << recur(n);
+
+}
