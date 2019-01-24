@@ -9,6 +9,7 @@ int d[1001][1001][2];
 int dx[] = {1,-1,0,0};
 int dy[] = {0,0,1,-1};
 queue<tuple<int, int, int> >q;
+
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -24,11 +25,17 @@ int main(){
     }
     q.push(make_tuple(1,1,0));
     d[1][1][0]=1;
+    int cnt = 0;
     while(!q.empty()){
         int x, y, z;
         tie(x,y,z) = q.front();
         q.pop();
-        
+        if(x==N && y ==M){
+            cnt++;
+            if(cnt == 2){
+                break;
+            }
+        }
         for(int i=0 ; i<4 ; i++){
             int nx = x+dx[i];
             int ny = y+dy[i];
