@@ -1,0 +1,93 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+char a[21][21];
+int dx[] = {-1,0,1,0};
+int dy[] = {0,1,0,-1};
+
+int T,Test_n;
+int memory;
+int go_dir;
+int ans=0;
+void check(char temp){
+	if(temp>='0' && temp<='9'){
+		memory = temp-'0';
+	} else if(temp == '+'){
+		memory = (memory+1)%16;
+	} else if (temp == '-'){
+		
+	} else {
+		switch(temp){
+			case '<' :
+			go_dir = 3;
+			break;
+			case '>' :
+			go_dir = 1;
+			break;
+			case '^' :
+			go_dir = 0;
+			break;
+			case 'v' :
+			go_dir = 2;
+			break;
+			
+			case '_' :
+			if(memory==0){
+				go_dir = 1;
+			} else{
+				go_dir = 3;
+			}
+			break;
+			
+			case '|' :
+			if(memory==0){
+				go_dir = 2;
+			} else{
+				go_dir = 0;
+			}
+			break;
+		}
+	}
+	
+	
+}
+
+
+
+void dfs(int x, int y){
+	temp = a[x][y];
+	if(temp=='@'){
+		cout << Test_n << '# ' << YES <<'\n';
+	} else if(temp != '?'){
+		check(temp);
+	} else if(temp =='?'){
+		for(int i = 0 ; i<4 ; i++){
+			
+		}
+	}
+	
+	
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	
+	cin >> T;
+	for(int Test_n = 1 ; Test_n <=T ; Test_n++){
+		int R,C;
+		cin >> R >> C;
+		go_dir = 1;
+		memory = 0;
+		for(int i = 1 ; i<=R ; i++){
+			for(int j =1 ; j<=C ; j++){
+				cin >> a[i][j];
+			}
+		}
+		
+		
+	}
+	// your code goes here
+	return 0;
+}
