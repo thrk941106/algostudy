@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string.h>
+#include <set>
+using namespace std;
+int T;
+char a[5][5];
+int dx[] = {0,-1,0,1,0};
+int dy[] = {0,0,1,0,-1};
+int d[4][4][4][4][4];
+set<int> s;
+int ans=0;
+void setting_Case(){
+	for(int i = 1 ; i <= N ; i++){
+		for(int j=1 ; j<=M ; j++){
+			int temp;
+			scanf("%d",&temp);
+			a[i][j] = temp-'0';
+		}
+	}
+	memset(d,0,sizeof(d));
+}
+void dfs(int r, int c, string se, int count, int ad[6]){
+	if(d[ad[1]][ad[2]][ad[3]][ad[4]][ad[5]])
+	if(count == 6){
+		auto is_there=s.insert(std::stoi( se ));
+		if(is_there.second == true){
+			ans++;	
+		}
+		return;
+	} else{
+		
+		for(int i=1 ; i<= 1)
+		
+		
+		
+		
+		
+		
+	}
+	
+
+	
+}
+int main() {
+	scanf("%d",&T);
+	for(int i = 1 ; i<=T; i++){
+		setting_Case();
+	for(int i = 1 ; i <= N ; i++){
+		for(int j=1 ; j<=M ; j++){
+			int ad[6]={0,};
+			string temp;
+			temp.assign(a[i][j]);
+			dfs(i,j,temp,1,ad);
+		}
+	}
+		
+		
+		
+		
+	}
+	// your code goes here
+	return 0;
+}
