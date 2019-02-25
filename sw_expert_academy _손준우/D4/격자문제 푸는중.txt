@@ -6,51 +6,64 @@ int T;
 char a[5][5];
 int dx[] = {0,-1,0,1,0};
 int dy[] = {0,0,1,0,-1};
-int d[4][4][4][4][4];
+bool d[4][4][4][4][4];
 set<int> s;
 int ans=0;
+FILE *in;
 void setting_Case(){
-	for(int i = 1 ; i <= N ; i++){
-		for(int j=1 ; j<=M ; j++){
+	for(int i = 1 ; i <= 4 ; i++){
+		for(int j=1 ; j<=4 ; j++){
 			int temp;
-			scanf("%d",&temp);
-			a[i][j] = temp-'0';
+			fscanf(in,"%d",&temp);
+			a[i][j] = temp+'0';
+			cout << a[i][j];
 		}
+		cout << '\n';
 	}
-	memset(d,0,sizeof(d));
 }
-void dfs(int r, int c, string se, int count, int ad[6]){
-	if(d[ad[1]][ad[2]][ad[3]][ad[4]][ad[5]])
-	if(count == 6){
-		auto is_there=s.insert(std::stoi( se ));
-		if(is_there.second == true){
-			ans++;	
+void dfsd(int r, int c, string tse, int count, int tad[6]){
+	int ad[6];
+	string se = tse;
+	copy(tad, tad + 6, ad);
+	if(r<=4 && c<=4 && r>0 && c>0){
+		if(d[ad[1]][ad[2]][ad[3]][ad[4]][ad[5]]==true){
+			return;
+		}else{
+			d[ad[1]][ad[2]][ad[3]][ad[4]][ad[5]]=true;
+			se += a[r][c];
 		}
-		return;
-	} else{
+		if(count == 6){
+			int intValue = atoi(se.c_str());
+			pair<set<int>::iterator, bool> is_there;
+			is_there=s.insert(intValue);
+			if(is_there.second == true){
+				ans++;
+				cout << intValue <<'\n';
+			}
+			return;
+		} else{
+			for(int i=1 ; i<= 4 ; i++){
+				ad[count]=i;
+				dfsd(r+dx[i],c+dy[i],se,count+1,ad);
+			}
 		
-		for(int i=1 ; i<= 1)
-		
-		
-		
-		
-		
+		}
+	
 		
 	}
-	
-
-	
 }
 int main() {
-	scanf("%d",&T);
+	in = fopen("a.txt","r");
+	fscanf(in,"%d",&T);
 	for(int i = 1 ; i<=T; i++){
 		setting_Case();
-	for(int i = 1 ; i <= N ; i++){
-		for(int j=1 ; j<=M ; j++){
+	for(int i = 1 ; i <= 4 ; i++){
+		for(int j=1 ; j<=4 ; j++){
 			int ad[6]={0,};
 			string temp;
-			temp.assign(a[i][j]);
-			dfs(i,j,temp,1,ad);
+			temp = a[i][j];
+			memset(d,false,sizeof(d));
+			dfsd(i,j,temp,1,ad);
 		}
 	}
 		
@@ -58,6 +71,7 @@ int main() {
 		
 		
 	}
+	printf("%d",ans);
 	// your code goes here
-	return 0;
+	system("pause");
 }
